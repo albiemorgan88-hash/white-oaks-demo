@@ -22,7 +22,8 @@
         /* Login Screen */
         .login-screen {
             min-height: 100vh;
-            background: linear-gradient(135deg, #4a6741 0%, #6b8e5a 50%, #8fb069 100%);
+            background: linear-gradient(135deg, rgba(74,103,65,0.82) 0%, rgba(107,142,90,0.75) 50%, rgba(74,103,65,0.85) 100%),
+                        url('https://images.unsplash.com/photo-1564959130747-897fb406b9af?w=1200&q=80') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -38,13 +39,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.05)"/></svg>');
-            animation: float 20s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+            background: none;
         }
 
         .logo-container {
