@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recovery Journey | White Oaks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+            min-height: 100vh;
+            padding: 0 20px 80px;
+            color: #2d4a2d;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0 20px;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 0 -20px 30px;
+            border-bottom: 3px solid #7eb87e;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d4a2d;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: #5a7a5a;
+            font-weight: 500;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            margin: 0 -20px 30px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            color: #5a7a5a;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active {
+            background: #7eb87e;
+            color: white;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(46, 74, 46, 0.1);
+            border-left: 4px solid #7eb87e;
+        }
+
+        .check-in-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d4a2d;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .mood-scale {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 0 10px;
+        }
+
+        .mood-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .mood-option:hover {
+            background: #f5f8f5;
+        }
+
+        .mood-option.selected {
+            background: #7eb87e;
+            color: white;
+        }
+
+        .mood-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .mood-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .notes-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-top: 15px;
+            min-height: 80px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .notes-input:focus {
+            outline: none;
+            border-color: #7eb87e;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: #7eb87e;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #6ba76b;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .contact-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            background: #f8fdf8;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #e8f5e8;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: #7eb87e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .contact-info h3 {
+            color: #2d4a2d;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .contact-info p {
+            color: #5a7a5a;
+            font-size: 14px;
+        }
+
+        .call-btn {
+            margin-left: auto;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .milestone-card {
+            text-align: center;
+            background: linear-gradient(135deg, #7eb87e, #6ba76b);
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .milestone-number {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .milestone-text {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .milestone-message {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .journal-entry {
+            margin-bottom: 20px;
+        }
+
+        .journal-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .resource-item {
+            padding: 20px;
+            border-bottom: 1px solid #e8f5e8;
+            cursor: pointer;
+        }
+
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+
+        .resource-item h3 {
+            color: #2d4a2d;
+            margin-bottom: 8px;
+        }
+
+        .resource-item p {
+            color: #5a7a5a;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .quick-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .quick-btn {
+            flex: 1;
+            padding: 12px;
+            background: #e8f5e8;
+            color: #2d4a2d;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .quick-btn.emergency {
+            background: #dc3545;
+            color: white;
+        }
+
+        .meetings-list {
+            gap: 15px;
+        }
+
+        .meeting-link {
+            display: block;
+            padding: 20px;
+            background: #f8fdf8;
+            border: 2px solid #e8f5e8;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #2d4a2d;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .meeting-link:hover {
+            border-color: #7eb87e;
+            background: #f0f8f0;
+        }
+
+        .meeting-link h3 {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .mood-scale {
+                padding: 0;
+            }
+
+            .mood-option {
+                margin: 0 2px;
+            }
+
+            .mood-emoji {
+                font-size: 28px;
+            }
+
+            .mood-label {
+                font-size: 10px;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">White Oaks Aftercare</div>
+        <div class="tagline">Your journey continues</div>
+    </div>
+
+    <div class="nav">
+        <button class="nav-item active" onclick="showSection('checkin')">Check-In</button>
+        <button class="nav-item" onclick="showSection('support')">Support</button>
+        <button class="nav-item" onclick="showSection('milestones')">Milestones</button>
+        <button class="nav-item" onclick="showSection('journal')">Journal</button>
+        <button class="nav-item" onclick="showSection('meetings')">Meetings</button>
+        <button class="nav-item" onclick="showSection('resources')">Resources</button>
+    </div>
+
+    <div id="checkin" class="section active">
+        <div class="card">
+            <h2 class="check-in-title">How are you feeling today?</h2>
+            <div class="mood-scale">
+                <div class="mood-option" data-mood="1">
+                    <div class="mood-emoji">😰</div>
+                    <div class="mood-label">Struggling</div>
+                </div>
+                <div class="mood-option" data-mood="2">
+                    <div class="mood-emoji">😕</div>
+                    <div class="mood-label">Difficult</div>
+                </div>
+                <div class="mood-option" data-mood="3">
+                    <div class="mood-emoji">😐</div>
+                    <div class="mood-label">Getting by</div>
+                </div>
+                <div class="mood-option" data-mood="4">
+                    <div class="mood-emoji">😊</div>
+                    <div class="mood-label">Good day</div>
+                </div>
+                <div class="mood-option" data-mood="5">
+                    <div class="mood-emoji">😄</div>
+                    <div class="mood-label">Thriving</div>
+                </div>
+            </div>
+            <textarea class="notes-input" placeholder="Anything you'd like to share about today? (optional)"></textarea>
+            <button class="btn" onclick="submitCheckIn()" disabled id="checkin-btn">Save Check-In</button>
+            <div class="success-message" id="success-msg">
+                Thank you for checking in today. You're doing great. 💚
+            </div>
+        </div>
+    </div>
+
+    <div id="support" class="section">
+        <div class="card">
+            <h2 class="check-in-title">Your Support Network</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon">🆘</div>
+                    <div class="contact-info">
+                        <h3>Crisis Support</h3>
+                        <p>Samaritans - 24/7 free support</p>
+                    </div>
+                    <a href="tel:116123" class="call-btn">Call 116 123</a>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🤝</div>
+                    <div class="contact-info">
+                        <h3>My Sponsor</h3>
+                        <p>Set up your sponsor's details</p>
+                    </div>
+                    <button class="call-btn" onclick="setSponsor()">Add Contact</button>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🏠</div>
+                    <div class="contact-info">
+                        <h3>White Oaks Aftercare</h3>
+                        <p>Your treatment team</p>
+                    </div>
+                    <a href="tel:+353749139010" class="call-btn">Call Centre</a>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">👨‍⚕️</div>
+                    <div class="contact-info">
+                        <h3>GP / Doctor</h3>
+                        <p>Your local healthcare</p>
+                    </div>
+                    <button class="call-btn" onclick="setGP()">Add Contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="milestones" class="section">
+        <div class="card milestone-card">
+            <div class="milestone-number" id="days-count">--</div>
+            <div class="milestone-text">Days since completing treatment</div>
+            <div class="milestone-message" id="milestone-message">Every day is a victory</div>
+        </div>
+
+        <div class="card">
+            <h3>Upcoming Milestones</h3>
+            <div style="margin-top: 15px;">
+                <div style="padding: 15px; background: #f8fdf8; border-radius: 8px; margin-bottom: 10px;">
+                    <strong>30 Days</strong> - First month milestone 🎉
+                </div>
+                <div style="padding: 15px; background: #f8fdf8; border-radius: 8px; margin-bottom: 10px;">
+                    <strong>60 Days</strong> - Two months strong 💪
+                </div>
+                <div style="padding: 15px; background: #f8fdf8; border-radius: 8px; margin-bottom: 10px;">
+                    <strong>90 Days</strong> - Three months of growth 🌱
+                </div>
+                <div style="padding: 15px; background: #f8fdf8; border-radius: 8px; margin-bottom: 10px;">
+                    <strong>6 Months</strong> - Half a year of recovery 🌟
+                </div>
+                <div style="padding: 15px; background: #f8fdf8; border-radius: 8px;">
+                    <strong>1 Year</strong> - Annual celebration 🎊
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="journal" class="section">
+        <div class="card">
+            <h2 class="check-in-title">Today's Gratitude</h2>
+            <p style="text-align: center; color: #5a7a5a; margin-bottom: 20px;">
+                Name three things you're grateful for today
+            </p>
+            
+            <div class="journal-entry">
+                <label style="font-weight: 600; color: #2d4a2d;">1. I'm grateful for...</label>
+                <input type="text" class="journal-input" placeholder="Something that brought you joy or peace">
+            </div>
+
+            <div class="journal-entry">
+                <label style="font-weight: 600; color: #2d4a2d;">2. I'm grateful for...</label>
+                <input type="text" class="journal-input" placeholder="A person who supports you">
+            </div>
+
+            <div class="journal-entry">
+                <label style="font-weight: 600; color: #2d4a2d;">3. I'm grateful for...</label>
+                <input type="text" class="journal-input" placeholder="An opportunity or moment today">
+            </div>
+
+            <button class="btn" onclick="saveGratitude()">Save Today's Gratitude</button>
+        </div>
+
+        <div class="card">
+            <h3>Recent Entries</h3>
+            <div id="recent-entries" style="margin-top: 15px; color: #5a7a5a;">
+                <em>Your gratitude entries will appear here</em>
+            </div>
+        </div>
+    </div>
+
+    <div id="meetings" class="section">
+        <div class="card">
+            <h2 class="check-in-title">Find a Meeting</h2>
+            <div class="meetings-list">
+                <a href="https://www.alcoholicsanonymous.ie/find-a-meeting/" target="_blank" class="meeting-link">
+                    <h3>🇮🇪 AA Ireland</h3>
+                    <p>Alcoholics Anonymous meetings across Ireland</p>
+                </a>
+
+                <a href="https://www.aanorthernireland.org/meetings" target="_blank" class="meeting-link">
+                    <h3>🇬🇧 AA Northern Ireland</h3>
+                    <p>Find AA meetings in Northern Ireland</p>
+                </a>
+
+                <a href="https://ukna.org/meetings/" target="_blank" class="meeting-link">
+                    <h3>💊 NA UK & Ireland</h3>
+                    <p>Narcotics Anonymous meetings</p>
+                </a>
+
+                <a href="https://www.gamblersanonymous.ie/" target="_blank" class="meeting-link">
+                    <h3>🎲 GA Ireland</h3>
+                    <p>Gamblers Anonymous meetings</p>
+                </a>
+
+                <a href="https://www.smartrecovery.org.uk/smart-recovery-meetings/" target="_blank" class="meeting-link">
+                    <h3>🧠 SMART Recovery</h3>
+                    <p>Alternative recovery meetings</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="resources" class="section">
+        <div class="card">
+            <h2 class="check-in-title">Recovery Resources</h2>
+            
+            <div class="resource-item" onclick="toggleResource('coping')">
+                <h3>🛡️ Coping with Triggers</h3>
+                <p>Strategies to handle difficult moments</p>
+                <div id="coping" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                    <ul style="margin-left: 20px; color: #5a7a5a;">
+                        <li>HALT - Am I Hungry, Angry, Lonely, or Tired?</li>
+                        <li>Call your sponsor or support person</li>
+                        <li>Go to a meeting (online or in-person)</li>
+                        <li>Practice deep breathing: 4 counts in, hold 4, out 4</li>
+                        <li>Remove yourself from the triggering situation</li>
+                        <li>Remember: This feeling will pass</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resource-item" onclick="toggleResource('grounding')">
+                <h3>🌿 Grounding Exercises</h3>
+                <p>Techniques to stay present and calm</p>
+                <div id="grounding" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                    <ul style="margin-left: 20px; color: #5a7a5a;">
+                        <li><strong>5-4-3-2-1:</strong> 5 things you see, 4 you hear, 3 you touch, 2 you smell, 1 you taste</li>
+                        <li>Feel your feet on the ground</li>
+                        <li>Name 5 things in the room around you</li>
+                        <li>Hold an ice cube or splash cold water on your face</li>
+                        <li>Count backwards from 100 by 7s</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resource-item" onclick="toggleResource('serenity')">
+                <h3>🙏 The Serenity Prayer</h3>
+                <p>A cornerstone of recovery wisdom</p>
+                <div id="serenity" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                    <p style="color: #2d4a2d; font-style: italic; text-align: center; line-height: 1.6;">
+                        "God, grant me the serenity to accept the things I cannot change,<br>
+                        the courage to change the things I can,<br>
+                        and the wisdom to know the difference."
+                    </p>
+                </div>
+            </div>
+
+            <div class="resource-item" onclick="toggleResource('steps')">
+                <h3>🪜 The 12 Steps</h3>
+                <p>Foundation of your recovery journey</p>
+                <div id="steps" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                    <p style="color: #5a7a5a; margin-bottom: 10px;">
+                        <em>A gentle reminder of your foundation. Discuss with your sponsor.</em>
+                    </p>
+                    <ol style="margin-left: 20px; color: #5a7a5a; line-height: 1.5;">
+                        <li>Admitted we were powerless...</li>
+                        <li>Came to believe in a Power greater than ourselves...</li>
+                        <li>Made a decision to turn our will and lives over...</li>
+                        <li>Made a fearless moral inventory...</li>
+                        <li>Admitted the exact nature of our wrongs...</li>
+                        <li>Were entirely ready to have God remove defects...</li>
+                        <li>Humbly asked Him to remove our shortcomings...</li>
+                        <li>Made a list of all persons we had harmed...</li>
+                        <li>Made direct amends wherever possible...</li>
+                        <li>Continued to take personal inventory...</li>
+                        <li>Through prayer and meditation improved conscious contact...</li>
+                        <li>Having had a spiritual awakening, we tried to carry this message...</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <button class="quick-btn emergency" onclick="emergencyCall()">Emergency</button>
+        <button class="quick-btn" onclick="quickCall('sponsor')">Call Sponsor</button>
+        <button class="quick-btn" onclick="showSection('checkin')">Quick Check-In</button>
+    </div>
+
+    <script>
+        let selectedMood = null;
+        let completionDate = localStorage.getItem('white-oaks-completion') || '2025-02-15'; // Default date
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateMilestone();
+            loadRecentEntries();
+            
+            // Setup mood selection
+            document.querySelectorAll('.mood-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedMood = this.dataset.mood;
+                    document.getElementById('checkin-btn').disabled = false;
+                });
+            });
+        });
+
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(section).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function calculateMilestone() {
+            const completion = new Date(completionDate);
+            const today = new Date();
+            const diffTime = Math.abs(today - completion);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('days-count').textContent = diffDays;
+            
+            let message = "Every day is a victory";
+            if (diffDays >= 365) {
+                message = "Over a year of freedom! You're an inspiration! 🎊";
+            } else if (diffDays >= 180) {
+                message = "Six months strong! You've built something beautiful! 🌟";
+            } else if (diffDays >= 90) {
+                message = "Three months of growth! You're thriving! 🌱";
+            } else if (diffDays >= 60) {
+                message = "Two months of strength! You're doing amazing! 💪";
+            } else if (diffDays >= 30) {
+                message = "First month complete! This is huge! 🎉";
+            } else if (diffDays >= 7) {
+                message = "One week at a time. You're building something strong! 💚";
+            }
+            
+            document.getElementById('milestone-message').textContent = message;
+        }
+
+        function submitCheckIn() {
+            const mood = selectedMood;
+            const notes = document.querySelector('.notes-input').value;
+            
+            if (!mood) return;
+            
+            // Save to localStorage
+            const checkin = {
+                date: new Date().toISOString().split('T')[0],
+                mood: mood,
+                notes: notes,
+                timestamp: new Date().toISOString()
+            };
+            
+            let checkins = JSON.parse(localStorage.getItem('white-oaks-checkins') || '[]');
+            checkins.unshift(checkin);
+            checkins = checkins.slice(0, 30); // Keep last 30 days
+            localStorage.setItem('white-oaks-checkins', JSON.stringify(checkins));
+            
+            // Show success message
+            document.getElementById('success-msg').style.display = 'block';
+            document.getElementById('checkin-btn').textContent = 'Check-in Saved ✓';
+            document.getElementById('checkin-btn').disabled = true;
+            
+            setTimeout(() => {
+                document.getElementById('success-msg').style.display = 'none';
+                document.getElementById('checkin-btn').textContent = 'Save Check-In';
+                document.querySelector('.notes-input').value = '';
+                document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+                selectedMood = null;
+            }, 3000);
+        }
+
+        function saveGratitude() {
+            const entries = document.querySelectorAll('.journal-input');
+            const gratitude = {
+                date: new Date().toISOString().split('T')[0],
+                entries: Array.from(entries).map(entry => entry.value).filter(val => val.trim()),
+                timestamp: new Date().toISOString()
+            };
+            
+            if (gratitude.entries.length === 0) return;
+            
+            let journals = JSON.parse(localStorage.getItem('white-oaks-gratitude') || '[]');
+            journals.unshift(gratitude);
+            journals = journals.slice(0, 10); // Keep last 10 entries
+            localStorage.setItem('white-oaks-gratitude', JSON.stringify(journals));
+            
+            // Clear inputs and show success
+            entries.forEach(entry => entry.value = '');
+            alert('Gratitude saved! Thank you for taking time to reflect. 🙏');
+            
+            loadRecentEntries();
+        }
+
+        function loadRecentEntries() {
+            const journals = JSON.parse(localStorage.getItem('white-oaks-gratitude') || '[]');
+            const container = document.getElementById('recent-entries');
+            
+            if (journals.length === 0) {
+                container.innerHTML = '<em>Your gratitude entries will appear here</em>';
+                return;
+            }
+            
+            container.innerHTML = journals.slice(0, 3).map(journal => 
+                `<div style="margin-bottom: 15px; padding: 15px; background: #f8fdf8; border-radius: 8px;">
+                    <strong>${new Date(journal.date).toLocaleDateString()}</strong>
+                    <ul style="margin-top: 8px; margin-left: 20px;">
+                        ${journal.entries.map(entry => `<li>${entry}</li>`).join('')}
+                    </ul>
+                </div>`
+            ).join('');
+        }
+
+        function toggleResource(id) {
+            const element = document.getElementById(id);
+            element.style.display = element.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function setSponsor() {
+            const name = prompt('Enter your sponsor\'s name:');
+            const phone = prompt('Enter their phone number:');
+            if (name && phone) {
+                localStorage.setItem('white-oaks-sponsor', JSON.stringify({name, phone}));
+                alert('Sponsor contact saved!');
+                location.reload();
+            }
+        }
+
+        function setGP() {
+            const name = prompt('Enter your GP/Doctor name:');
+            const phone = prompt('Enter their phone number:');
+            if (name && phone) {
+                localStorage.setItem('white-oaks-gp', JSON.stringify({name, phone}));
+                alert('GP contact saved!');
+                location.reload();
+            }
+        }
+
+        function emergencyCall() {
+            if (confirm('Call emergency services (999)?')) {
+                window.location.href = 'tel:999';
+            }
+        }
+
+        function quickCall(type) {
+            if (type === 'sponsor') {
+                const sponsor = JSON.parse(localStorage.getItem('white-oaks-sponsor') || 'null');
+                if (sponsor) {
+                    window.location.href = `tel:${sponsor.phone}`;
+                } else {
+                    alert('Please add your sponsor\'s contact in the Support section first.');
+                }
+            }
+        }
+
+        // Load saved contacts
+        document.addEventListener('DOMContentLoaded', function() {
+            const sponsor = JSON.parse(localStorage.getItem('white-oaks-sponsor') || 'null');
+            const gp = JSON.parse(localStorage.getItem('white-oaks-gp') || 'null');
+            
+            if (sponsor) {
+                const sponsorContact = document.querySelector('.contact-item:nth-child(2)');
+                sponsorContact.querySelector('.contact-info h3').textContent = sponsor.name;
+                sponsorContact.querySelector('.contact-info p').textContent = `Your sponsor`;
+                sponsorContact.querySelector('.call-btn').innerHTML = `Call ${sponsor.name}`;
+                sponsorContact.querySelector('.call-btn').href = `tel:${sponsor.phone}`;
+                sponsorContact.querySelector('.call-btn').onclick = null;
+            }
+            
+            if (gp) {
+                const gpContact = document.querySelector('.contact-item:nth-child(4)');
+                gpContact.querySelector('.contact-info h3').textContent = gp.name;
+                gpContact.querySelector('.contact-info p').textContent = `Your healthcare provider`;
+                gpContact.querySelector('.call-btn').innerHTML = `Call ${gp.name}`;
+                gpContact.querySelector('.call-btn').href = `tel:${gp.phone}`;
+                gpContact.querySelector('.call-btn').onclick = null;
+            }
+        });
+    </script>
+</body>
+</html>
